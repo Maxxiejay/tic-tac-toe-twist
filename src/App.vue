@@ -132,6 +132,13 @@ const handlePlacementClick = (index) => {
   lastMovePlayer.value = currentPlayer.value
   moveCount.value++
   
+  checkWinner()
+  
+  if (winner.value !== '' && winner.value !== 'draw') {
+    gamePhase.value = 'finished'
+    return
+  }
+  
   if (moveCount.value === 9) {
     // Board is full, enter swap phase
     swapPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'
@@ -204,7 +211,7 @@ const checkWinner = () => {
   } else if (oWins.length > 0) {
     winner.value = 'O'
   } else {
-    winner.value = 'draw'
+    winner.value = ''
   }
 }
 
