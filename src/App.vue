@@ -132,21 +132,19 @@ const handlePlacementClick = (index) => {
   lastMovePlayer.value = currentPlayer.value
   moveCount.value++
   
-  checkWinner()
-  
-  if (winner.value !== '' && winner.value !== 'draw') {
-    gamePhase.value = 'finished'
-    return
-  }
-  
-  if (moveCount.value === 9) {
-    // Board is full, enter swap phase
+  if (moveCount.value < 9) {
+    checkWinner()
+    if (winner.value !== '' && winner.value !== 'draw') {
+      // Early win - skip swap phase
+      gamePhase.value = 'finished'
+      return
+    }
+    // Continue placement phase
+    currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'
+  } else {
     swapPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'
     gamePhase.value = 'swap'
     swapStep.value = 'select-own'
-  } else {
-    // Continue placement phase
-    currentPlayer.value = currentPlayer.value === 'X' ? 'O' : 'X'
   }
 }
 
